@@ -1,12 +1,16 @@
 # 2-Player-Maze-Game
-Description
+<h3>Description</h3>
+
 A maze game which randomly generates a different maze each run through. Two players race from one end to the other to see who can make it there first.
 
-Installation & Usage
+<h3>Installation & Usage</h3>
+
 //installation
 
-Contributors
+<h3>Contributors</h3>
+
 //contributors
 
-Licensing
+<h3>Licensing:</h3>
+
 //licensing info?
