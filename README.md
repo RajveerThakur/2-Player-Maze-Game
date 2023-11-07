@@ -10,8 +10,11 @@ A maze game which randomly generates a different maze each run through. Two play
 <h3>Contributors</h3>
 
 Rajveer Thakur - Product Manager, Release Manager
+
 Madison Duch - UI/UX Designer
+
 Hannah Seo - Quality Assurance Analyst
+
 Vidit Sharma - Project Manager
 
 <h3>Licensing</h3>
