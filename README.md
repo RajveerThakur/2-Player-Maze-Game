@@ -8,15 +8,15 @@ A maze game which randomly generates a different maze each run through. Two play
 //installation
 
 <h3>Contributors</h3>
+<ul>
+<li>Rajveer Thakur - Product Manager, Release Manager</li>
 
-Rajveer Thakur - Product Manager, Release Manager
+<li>Madison Duch - UI/UX Designer</li>
 
-Madison Duch - UI/UX Designer
+<li>Hannah Seo - Quality Assurance Analyst</li>
 
-Hannah Seo - Quality Assurance Analyst
-
-Vidit Sharma - Project Manager
-
+<li>Vidit Sharma - Project Manager</li>
+</ul>
 <h3>Licensing</h3>
 
 //licensing info?
