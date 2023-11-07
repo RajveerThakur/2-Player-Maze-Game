@@ -11,6 +11,6 @@ A maze game which randomly generates a different maze each run through. Two play
 
 //contributors
 
-<h3>Licensing:</h3>
+<h3>Licensing</h3>
 
 //licensing info?
