@@ -10,3 +10,5 @@ The intended audience of our game is our classmates and possibly friends to help
 Our ISP will be a web-based game (name to be determined) that allows two (or possibly more) users to compete in navigating a maze, with different levels that vary in difficulty. The colors of the maze itself, background, and the player icons will be customizable. 
 <h3>User Needs / Functional Requirements</h3>
 The game will allow two people to play on one computer by controlling the first player icon using the WASD keys to move, and the second player icon is controlled using the up, down, left, and right arrow keys. They will both start on opposite ends of the maze and race to reach the middle, and whoever reaches the middle first will be the winner of that level. There will be various levels they can play to ensure the game doesn't get too boring or repetitive. 
+
+# Wireframe / Design Mock-Up 
