@@ -1,13 +1,7 @@
-"""
-Importing important libraries
-"""
-import pygame
-import sys
+#imports
+import pygame, sys
 
-
-"""
-Setting up an environment to initialize pygame
-"""
+#environment setup
 mainClock = pygame.time.Clock()
 from pygame.locals import *
 pygame.init()
@@ -17,9 +11,7 @@ screen = pygame.display.set_mode((1200, 960),0,32)
 #setting font settings
 font = pygame.font.SysFont(None, 30)
  
-"""
-A function that can be used to write text on our screen and buttons
-"""
+#function to write the text
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
@@ -38,11 +30,9 @@ def main_menu():
  
         mx, my = pygame.mouse.get_pos()
 
-
         #creating buttons
         button_1 = pygame.Rect(500, 100, 200, 50)
         button_2 = pygame.Rect(500, 180, 200, 50)
-
 
         #defining functions when a certain button is pressed
         if button_1.collidepoint((mx, my)):
@@ -74,9 +64,7 @@ def main_menu():
         pygame.display.update()
         mainClock.tick(60)
  
-"""
-This function is called when the "PLAY" button is clicked.
-"""
+#output when PLAY is pressed
 def game():
     running = True
     while running:
@@ -94,10 +82,7 @@ def game():
         pygame.display.update()
         mainClock.tick(60)
 
-
-"""
-This function is called when the "OPTIONS" button is clicked.
-"""
+#output when OPTIONS is pressed
 def options():
     running = True
     while running:
