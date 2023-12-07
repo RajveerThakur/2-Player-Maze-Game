@@ -1,5 +1,6 @@
 #imports
-import pygame, sys
+import pygame
+import sys
 
 #environment setup
 mainClock = pygame.time.Clock()
@@ -30,7 +31,7 @@ def main_menu():
  
         mx, my = pygame.mouse.get_pos()
 
-        #creating buttons
+        #creating buttons & their locations
         button_1 = pygame.Rect(500, 100, 200, 50)
         button_2 = pygame.Rect(500, 180, 200, 50)
 
@@ -41,7 +42,7 @@ def main_menu():
         if button_2.collidepoint((mx, my)):
             if click:
                 options()
-        pygame.draw.rect(screen, (255, 0, 0), button_1)
+        pygame.draw.rect(screen, (255, 0, 0), button_1) #button colors
         pygame.draw.rect(screen, (255, 0, 0), button_2)
  
         #writing text on top of button
@@ -68,7 +69,7 @@ def main_menu():
 def game():
     running = True
     while running:
-        screen.fill((0,0,0))
+        screen.fill((0,0,0)) #being replaced by game run function
        
         draw_text('GAME SCREEN', font, (255, 255, 255), screen, 20, 20)
         for event in pygame.event.get():
@@ -86,7 +87,7 @@ def game():
 def options():
     running = True
     while running:
-        screen.fill((0,0,0))
+        screen.fill((0,0,0)) #being replaced by options screen function
  
         draw_text('OPTIONS SCREEN', font, (255, 255, 255), screen, 20, 20)
         for event in pygame.event.get():
