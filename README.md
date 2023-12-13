@@ -13,7 +13,7 @@ A maze game which randomly generates a different maze each run through. Two play
 
 <li>Madison Duch - UI/UX Designer</li>
 
-<li>Hannah Seo - Quality Assurance Analyst</li>
+<li>Hannah Seo - Product Manager</li>
 
 <li>Vidit Sharma - Project Manager</li>
 </ul>
