@@ -26,8 +26,8 @@ click = False
 def main_menu():
     while True:
  
-        screen.fill((0,190,255))
-        draw_text('Main Menu', font, (0,0,0), screen, 550, 40)
+        screen.fill((38,38,38))
+        draw_text('Main Menu', font, (0,255,0), screen, 550, 40)
  
         mx, my = pygame.mouse.get_pos()
 
@@ -42,12 +42,12 @@ def main_menu():
         if button_2.collidepoint((mx, my)):
             if click:
                 options()
-        pygame.draw.rect(screen, (255, 0, 0), button_1) #button colors
-        pygame.draw.rect(screen, (255, 0, 0), button_2)
+        pygame.draw.rect(screen, (0, 255, 0), button_1) #button colors
+        pygame.draw.rect(screen, (0, 255, 0), button_2)
  
         #writing text on top of button
-        draw_text('PLAY', font, (255,255,255), screen, 570, 115)
-        draw_text('OPTIONS', font, (255,255,255), screen, 550, 195)
+        draw_text('PLAY', font, (38,38,38), screen, 570, 115)
+        draw_text('OPTIONS', font, (38,38,38), screen, 550, 195)
 
         click = False
         for event in pygame.event.get():
