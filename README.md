@@ -15,15 +15,15 @@ Our project is based on Python 3.12 and the Pygame library.
 //installation
 
 <h3>Contributors</h3>
-<ul>
-<li>Rajveer Thakur - Product Manager, Release Manager</li>
 
-<li>Madison Duch - UI/UX Designer</li>
+[Rajveer Thakur](https://github.com/RajveerThakur) - Product Manager, Release Manager
 
-<li>Hannah Seo - Product Manager</li>
+[Madison Duch](https://github.com/madisonduch) - UI/UX Designer
 
-<li>Vidit Sharma - Project Manager</li>
-</ul>
+[Hannah Seo](https://github.com/hannah-seo) - QA Analyst
+
+[Vidit Sharma](https://github.com/viditsmart) - Project Manager
+
 <h3>Licensing</h3>
 
 //licensing info?
