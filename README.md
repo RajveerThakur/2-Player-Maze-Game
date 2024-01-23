@@ -12,8 +12,6 @@ Team dynamics are an important part of our vision as we want to maximize collabo
 Our project is based on Python 3.12 and the Pygame library.
 <h3>Installation & Usage</h3>
 
-//installation
-
 <h3>Contributors</h3>
 
 [Rajveer Thakur](https://github.com/RajveerThakur) - Product Manager, Release Manager
@@ -23,7 +21,3 @@ Our project is based on Python 3.12 and the Pygame library.
 [Hannah Seo](https://github.com/hannah-seo) - QA Analyst
 
 [Vidit Sharma](https://github.com/viditsmart) - Project Manager
-
-<h3>Licensing</h3>
-
-//licensing info?
