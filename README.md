@@ -14,10 +14,10 @@ Our project is based on Python 3.12 and the Pygame library.
 
 <h3>Contributors</h3>
 
-[Rajveer Thakur](https://github.com/RajveerThakur) - Product Manager, Release Manager
+[Rajveer Thakur](https://github.com/RajveerThakur) - Product Manager, Release Manager @RajveerThakur
 
-[Madison Duch](https://github.com/madisonduch) - UI/UX Designer
+[Madison Duch](https://github.com/madisonduch) - UI/UX Designer @madisonduch
 
-[Hannah Seo](https://github.com/hannah-seo) - QA Analyst
+[Hannah Seo](https://github.com/hannah-seo) - QA Analyst @hannah-seo
 
-[Vidit Sharma](https://github.com/viditsmart) - Project Manager
+[Vidit Sharma](https://github.com/viditsmart) - Project Manager @viditsmart
