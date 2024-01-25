@@ -389,6 +389,18 @@ def options():
         screen.fill((38,38,38))
 
         draw_text('OPTIONS SCREEN', font, (255, 255, 255), screen, 20, 20)
+        draw_text('Background Colors', font, (255, 255, 255), screen, 90, 250)
+        draw_text('Maze Colors', font, (255, 255, 255), screen, 90, 550)
+
+        pg.draw.rect(screen, (227, 19, 29), pg.Rect(325, 225, 75, 75))
+        pg.draw.rect(screen, (255, 217, 102), pg.Rect(450, 225, 75, 75))
+        pg.draw.rect(screen, (39, 78, 19), pg.Rect(575, 225, 75, 75))
+        pg.draw.rect(screen, (96, 193, 232), pg.Rect(700, 225, 75, 75))
+        pg.draw.rect(screen, (24, 37, 71), pg.Rect(825, 225, 75, 75))
+        pg.draw.rect(screen, (250, 81, 146), pg.Rect(950, 225, 75, 75))
+        pg.draw.rect(screen, (91, 107, 170), pg.Rect(1075, 225, 75, 75))
+        pg.draw.rect(screen, (0, 0, 0), pg.Rect(325, 525, 75, 75))
+
         for event in pg.event.get():
             if event.type == QUIT:
                 pg.quit()
