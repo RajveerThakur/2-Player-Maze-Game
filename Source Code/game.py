@@ -10,8 +10,8 @@ SHOW_FPS = False  # Show frames per second in caption
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 960
 # Maze Size: 36 X 30 is max size for screen of 1200 X 1024
-MAZE_WIDTH = 36  # in cells
-MAZE_HEIGHT = 28  # in cells
+MAZE_WIDTH = 36  # (original = 36) in cells
+MAZE_HEIGHT = 28  # (original = 28) in cells
 CELL_COUNT = MAZE_WIDTH * MAZE_HEIGHT
 BLOCK_SIZE = 8  # Pixel size/Wall thickness
 PATH_WIDTH = 3  # Width of pathway in blocks
@@ -257,7 +257,13 @@ class MazeGenerator:
 
         pg.display.update([(p1_x, p1_y, p1_w, p1_h), (p2_x, p2_y, p2_w, p2_h)])
 
+    def draw_goals(self):
+        self.all_sprites.clear(self.screen, self.maze_image)
+        dirty_recs = self.all_sprites.draw(self.screen)
+        pg.display.update(dirty_recs)
+
     def initialize(self):
+        self.draw_goals()
         self.generate_maze()
         self.draw_instructions()
 
