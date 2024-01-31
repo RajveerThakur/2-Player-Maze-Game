@@ -10,8 +10,8 @@ SHOW_FPS = False  # Show frames per second in caption
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 960
 # Maze Size: 36 X 30 is max size for screen of 1200 X 1024
-MAZE_WIDTH = 36  # (original = 36) in cells
-MAZE_HEIGHT = 28  # (original = 28) in cells
+MAZE_WIDTH = 22  # (original = 36) in cells
+MAZE_HEIGHT = 22  # (original = 28) in cells
 CELL_COUNT = MAZE_WIDTH * MAZE_HEIGHT
 BLOCK_SIZE = 8  # Pixel size/Wall thickness
 PATH_WIDTH = 3  # Width of pathway in blocks
@@ -209,7 +209,6 @@ class MazeGenerator:
         pg.draw.rect(self.screen, color, (x * BLOCK_SIZE + x_offset, y * BLOCK_SIZE + y_offset, BLOCK_SIZE, BLOCK_SIZE))
 
     def draw_scores(self):
-        # Display Scores
         font = pg.font.SysFont('dejavusansmono', 18, True)
 
         p1_msg = f'PLAYER 1: {self.player1_score}'
@@ -234,7 +233,6 @@ class MazeGenerator:
         pg.display.update([(p1_x, p1_y, p1_w, p1_h), (p2_x, p2_y, p2_w, p2_h)])
 
     def draw_instructions(self):
-        # Display instructions
         font = pg.font.SysFont('Arial', 18, True)
 
         p1_msg = 'w a s d to move'
@@ -257,13 +255,13 @@ class MazeGenerator:
 
         pg.display.update([(p1_x, p1_y, p1_w, p1_h), (p2_x, p2_y, p2_w, p2_h)])
 
-    def draw_goals(self):
+    #def draw_goals_and_players(self): #this function will be essential in rendering moveable characters in the future but can be voided for the time being.
         self.all_sprites.clear(self.screen, self.maze_image)
         dirty_recs = self.all_sprites.draw(self.screen)
         pg.display.update(dirty_recs)
 
     def initialize(self):
-        self.draw_goals()
+        #self.draw_goals_and_players()
         self.generate_maze()
         self.draw_instructions()
 
@@ -273,7 +271,7 @@ class MazeGenerator:
 
         # Main game loop
         run = True
-        click = False
+        #click = False
         while run:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
