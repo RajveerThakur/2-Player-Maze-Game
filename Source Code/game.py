@@ -383,6 +383,34 @@ def options():
         screen.fill((38,38,38))
 
         draw_text('OPTIONS SCREEN', font, (255, 255, 255), screen, 20, 20)
+        draw_text('Background Colors', font, (255, 255, 255), screen, 90, 200)
+        draw_text('Maze Colors', font, (255, 255, 255), screen, 90, 500)
+        draw_text('Icon Colors', font, (255, 255, 255), screen, 90, 800)
+
+        pg.draw.rect(screen, (227, 19, 29), pg.Rect(325, 175, 75, 75))
+        pg.draw.rect(screen, (255, 217, 102), pg.Rect(450, 175, 75, 75))
+        pg.draw.rect(screen, (56, 118, 29), pg.Rect(575, 175, 75, 75))
+        pg.draw.rect(screen, (96, 193, 232), pg.Rect(700, 175, 75, 75))
+        pg.draw.rect(screen, (24, 37, 71), pg.Rect(825, 175, 75, 75))
+        pg.draw.rect(screen, (250, 81, 146), pg.Rect(950, 175, 75, 75))
+        pg.draw.rect(screen, (91, 107, 170), pg.Rect(1075, 175, 75, 75))
+        
+        pg.draw.rect(screen, (0, 0, 0), pg.Rect(325, 475, 75, 75))
+        pg.draw.rect(screen, (255, 255, 255), pg.Rect(450, 475, 75, 75))
+        pg.draw.rect(screen, (204, 204, 204), pg.Rect(575, 475, 75, 75))
+        pg.draw.rect(screen, (249, 203, 156), pg.Rect(700, 475, 75, 75))
+        pg.draw.rect(screen, (255, 217, 102), pg.Rect(825, 475, 75, 75))
+        pg.draw.rect(screen, (96, 193, 232), pg.Rect(950, 475, 75, 75))
+        pg.draw.rect(screen, (174, 73, 73), pg.Rect(1075, 475, 75, 75))
+
+        pg.draw.rect(screen, (153, 0, 0), pg.Rect(325, 775, 75, 75))
+        pg.draw.rect(screen, (180, 95, 6), pg.Rect(450, 775, 75, 75))
+        pg.draw.rect(screen, (39, 78, 103 ), pg.Rect(575, 775, 75, 75))
+        pg.draw.rect(screen, (28, 56, 14), pg.Rect(700, 775, 75, 75))
+        pg.draw.rect(screen, (32, 18, 77), pg.Rect(825, 775, 75, 75))
+        pg.draw.rect(screen, (152, 18, 88), pg.Rect(950, 775, 75, 75))
+        pg.draw.rect(screen, (68, 68, 68), pg.Rect(1075, 775, 75, 75))
+        
         for event in pg.event.get():
             if event.type == QUIT:
                 pg.quit()
