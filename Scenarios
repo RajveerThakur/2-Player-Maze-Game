@@ -1,1 +1,4 @@
 #Place where I can put all the scenerios in and what outcome it should have.
+Task 41: Create Test Scenarios Where Characters start a game
+Solution: Before the player officially starts a game, they will see the instructions on how to play the game and then the game will officially 
+begin.
