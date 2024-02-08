@@ -255,15 +255,63 @@ class MazeGenerator:
 
         pg.display.update([(p1_x, p1_y, p1_w, p1_h), (p2_x, p2_y, p2_w, p2_h)])
 
-    #def draw_goals_and_players(self): #this function will be essential in rendering moveable characters in the future but can be voided for the time being.
+    def draw_goals_and_players(self): #this function will be essential in rendering moveable characters in the future but can be voided for the time being.
         self.all_sprites.clear(self.screen, self.maze_image)
         dirty_recs = self.all_sprites.draw(self.screen)
         pg.display.update(dirty_recs)
 
-    def initialize(self):
-        #self.draw_goals_and_players()
+    def initialize(self): #calls functions to generate maze & reset it
+        self.draw_goals_and_players()
         self.generate_maze()
         self.draw_instructions()
+
+    def draw_scores(self):
+        font = pg.font.SysFont('dejavusansmono', 18, True)
+
+        p1_msg = f'PLAYER 1: {self.player1_score}'
+        p2_msg = f'PLAYER 2: {self.player2_score}'
+        p1_size = font.size(p1_msg)
+        p2_size = font.size(p2_msg)
+        p1 = font.render(p1_msg, True, PLAYER1_COLOR)
+        p2 = font.render(p2_msg, True, PLAYER2_COLOR)
+
+        p1_x = MAZE_TOP_LEFT_CORNER[0]
+        p1_y = MAZE_TOP_LEFT_CORNER[1] - p1_size[1]
+        p1_w = p1.get_rect().w
+        p1_h = p1.get_rect().h
+        p2_x = MAZE_TOP_LEFT_CORNER[0] + MAZE_WIDTH_PX - p2_size[0]
+        p2_y = MAZE_TOP_LEFT_CORNER[1] - p1_size[1]
+        p2_w = p2.get_rect().w
+        p2_h = p2.get_rect().h
+
+        self.screen.blit(p1, (p1_x, p1_y))
+        self.screen.blit(p2, (p2_x, p2_y))
+
+        pg.display.update([(p1_x, p1_y, p1_w, p1_h), (p2_x, p2_y, p2_w, p2_h)])
+
+    def draw_win(self):
+        msg = 'Player 1 Wins!' if self.win1_flag else 'Player 2 Wins!'
+
+        if self.win1_flag:
+            self.player1_score += 1
+        else:
+            self.player2_score += 1
+
+        self.draw_scores()
+
+        font = pg.font.SysFont('Arial', 72, True)
+        size = font.size(msg)
+        s = font.render(msg, True, MESSAGE_COLOR, (0, 0, 0))
+
+        x = SCREEN_WIDTH // 2 - size[0] // 2
+        y = SCREEN_HEIGHT // 2 - size[1] // 2
+        w = s.get_rect().w
+        h = s.get_rect().h
+
+        self.screen.blit(s, (x, y))
+        pg.display.update([(x, y, w, h)])
+
+        pg.time.wait(3000)
 
     def run_game(self):
         clock = pg.time.Clock()
@@ -271,7 +319,6 @@ class MazeGenerator:
 
         # Main game loop
         run = True
-        #click = False
         while run:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
