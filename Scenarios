@@ -2,3 +2,6 @@
 Task 41: Create Test Scenarios Where Characters start a game
 Solution: Before the player officially starts a game, they will see the instructions on how to play the game and then the game will officially 
 begin.
+Task 45: Create a Scenario where the player wants to choose a different background
+Solution: The player can go to the options button when they open the game from the beginning and choose the color they want to change the
+background to. 
