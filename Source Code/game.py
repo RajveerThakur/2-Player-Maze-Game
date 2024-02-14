@@ -261,9 +261,12 @@ class MazeGenerator:
         pg.display.update(dirty_recs)
 
     def initialize(self): #calls functions to generate maze & reset it
+        self.player1.reset
+        self.player2.reset
         self.draw_goals_and_players()
         self.generate_maze()
         self.draw_instructions()
+        self.draw_scores()
 
     def draw_scores(self):
         font = pg.font.SysFont('dejavusansmono', 18, True)
@@ -312,6 +315,152 @@ class MazeGenerator:
         pg.display.update([(x, y, w, h)])
 
         pg.time.wait(3000)
+
+    def get_player_cell_indexes(self, player): #function finds and returns player's location
+
+        # Top left corner of first cell; basis of finding cell positions
+        corner_offset_x = MAZE_TOP_LEFT_CORNER[0] + BLOCK_SIZE
+        corner_offset_y = MAZE_TOP_LEFT_CORNER[1] + BLOCK_SIZE
+
+        # Calculate which cells the player occupies
+        square = BLOCK_SIZE * 4
+        p1 = (player.rect.x - corner_offset_x, player.rect.y - corner_offset_y)
+        p2 = (p1[0] + square - 1, p1[1] + square - 1)
+        player_pos1 = (p1[0] // square, p1[1] // square)
+        player_pos2 = (p2[0] // square, p2[1] // square)
+        cell_index1 = self.get_cell_index((player_pos1[0], player_pos1[1]))
+        cell_index2 = self.get_cell_index((player_pos2[0], player_pos2[1]))
+
+        return cell_index1, cell_index2
+
+    def can_move(self, direction, player):
+        cell_index1, cell_index2 = self.get_player_cell_indexes(player)
+
+        functions = { #functions defined later
+            Direction.North: self.can_move_up,
+            Direction.East: self.can_move_right,
+            Direction.South: self.can_move_down,
+            Direction.West: self.can_move_left
+        }
+
+
+        # Check for maze exit/win
+        # Check if player is at opposing player's start x,y
+        if self.player1.rect.x == self.player2.start_x and self.player1.rect.y == self.player2.start_y:
+            self.win1_flag = True
+        elif self.player2.rect.x == self.player1.start_x and self.player2.rect.y == self.player1.start_y:
+            self.win2_flag = True
+
+
+        return functions[direction](cell_index1, cell_index2)
+
+
+    def can_move_up(self, index1, index2): #checks if player can move North
+        if index1 == index2:
+            return self.maze[index1] & CellProp.Path_N.value
+        else:
+            return index2 == index1 + MAZE_WIDTH
+
+
+    def can_move_right(self, index1, index2): #checks if player can move East
+        if index1 == index2:
+            return self.maze[index1] & CellProp.Path_E.value
+        else:
+            return index2 == index1 + 1
+
+
+    def can_move_down(self, index1, index2): #checks if player can move South
+        if index1 == index2:
+            return self.maze[index1] & CellProp.Path_S.value
+        else:
+            return index2 == index1 + MAZE_WIDTH
+
+
+    def can_move_left(self, index1, index2): #checks if player can move West
+        if index1 == index2:
+            return self.maze[index1] & CellProp.Path_W.value
+        else:
+            return index2 == index1 + 1
+
+
+    def move(self, player, move): #function to move characters
+        x, y = move
+        player.rect.x += x
+        player.rect.y += y
+        self.draw_players()
+
+
+    def try_move(self, player, direction): #checks to see if wall is there or if path is open
+        if self.can_move(direction, player):
+            self.move(player, direction.value)
+        else:
+            # Check if open corridor is nearby
+            index1, index2 = self.get_player_cell_indexes(player)
+
+
+            move1 = self.maze[index1] & self.direction_to_flag[direction].value
+            move2 = self.maze[index2] & self.direction_to_flag[direction].value
+
+
+            if move1 or move2:
+                # Move assist - move player closer to closest pathway in direction player is trying to move
+                # We know that index1 and index2 must be different cells
+                # gets direction of closest pathway
+                # measure center of player to center of each cell
+                player_center = player.rect.x + (player.rect.w // 2), player.rect.y + (player.rect.h // 2)
+
+
+                corner_offset_x = MAZE_TOP_LEFT_CORNER[0] + BLOCK_SIZE
+                corner_offset_y = MAZE_TOP_LEFT_CORNER[1] + BLOCK_SIZE
+                cell1_x, cell1_y = index1 % MAZE_WIDTH, index1 // MAZE_WIDTH
+                cell2_x, cell2_y = index2 % MAZE_WIDTH, index2 // MAZE_WIDTH
+
+
+                square = BLOCK_SIZE * 4
+                cell1_x_px = corner_offset_x + cell1_x * square
+                cell1_y_px = corner_offset_y + cell1_y * square
+                cell2_x_px = corner_offset_x + cell2_x * square
+                cell2_y_px = corner_offset_y + cell2_y * square
+
+
+                cell1_center = cell1_x_px + (BLOCK_SIZE * PATH_WIDTH) // 2, cell1_y_px + (BLOCK_SIZE * PATH_WIDTH) // 2
+                cell2_center = cell2_x_px + (BLOCK_SIZE * PATH_WIDTH) // 2, cell2_y_px + (BLOCK_SIZE * PATH_WIDTH) // 2
+
+
+                if cell1_center[0] == player_center[0]:
+                    # player is facing North/South corridor
+                    if move1 and move2:
+                        l1, l2 = abs(player_center[1] - cell1_center[1]), abs(player_center[1] - cell2_center[1])
+                        if l1 < l2:
+                            # move up
+                            self.move(player, Direction.North.value)
+                        else:
+                            # move down
+                            self.move(player, Direction.South.value)
+                    else:
+                        if move1:
+                            # move up
+                            self.move(player, Direction.North.value)
+                        else:
+                            # move down
+                            self.move(player, Direction.South.value)
+                else:
+                    # player is facing East/West corridor
+                    if move1 and move2:
+                        l1, l2 = abs(player_center[0] - cell1_center[0]), abs(player_center[0] - cell2_center[0])
+                        if l1 < l2:
+                            # move left
+                            self.move(player, Direction.West.value)
+                        else:
+                            # move right
+                            self.move(player, Direction.East.value)
+                    else:
+                        if move1:
+                            # move left
+                            self.move(player, Direction.West.value)
+                        else:
+                            # move right
+                            self.move(player, Direction.East.value)
 
     def run_game(self):
         clock = pg.time.Clock()
