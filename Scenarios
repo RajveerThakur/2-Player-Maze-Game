@@ -5,3 +5,5 @@ begin.
 Task 45: Create a Scenario where the player wants to choose a different background
 Solution: The player can go to the options button when they open the game from the beginning and choose the color they want to change the
 background to. 
+Task 46: Create Scenarios where the player finishes the game
+Solution: I screen that says either you win or you lose pops up and adds a point to your win counter if you won.
