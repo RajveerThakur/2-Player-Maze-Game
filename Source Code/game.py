@@ -10,8 +10,8 @@ SHOW_FPS = False  # Show frames per second in caption
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 960
 # Maze Size: 36 X 30 is max size for screen of 1200 X 1024
-MAZE_WIDTH = 22  # (original = 36) in cells
-MAZE_HEIGHT = 22  # (original = 28) in cells
+MAZE_WIDTH = 22  # in cells
+MAZE_HEIGHT = 22  # in cells
 CELL_COUNT = MAZE_WIDTH * MAZE_HEIGHT
 BLOCK_SIZE = 8  # Pixel size/Wall thickness
 PATH_WIDTH = 3  # Width of pathway in blocks
@@ -22,7 +22,6 @@ MAZE_TOP_LEFT_CORNER = (SCREEN_WIDTH // 2 - MAZE_WIDTH_PX // 2, SCREEN_HEIGHT //
 
 # Define the colors we'll need
 BACK_COLOR = (100, 100, 100)
-#WALL_COLOR = (18, 94, 32)
 WALL_COLOR = (0, 0, 0)
 MAZE_COLOR = (255, 255, 255)
 UNVISITED_COLOR = (0, 0, 0)
@@ -255,42 +254,10 @@ class MazeGenerator:
 
         pg.display.update([(p1_x, p1_y, p1_w, p1_h), (p2_x, p2_y, p2_w, p2_h)])
 
-    def draw_goals_and_players(self): #this function will be essential in rendering moveable characters in the future but can be voided for the time being.
+    def draw_players(self):
         self.all_sprites.clear(self.screen, self.maze_image)
         dirty_recs = self.all_sprites.draw(self.screen)
         pg.display.update(dirty_recs)
-
-    def initialize(self): #calls functions to generate maze & reset it
-        self.player1.reset
-        self.player2.reset
-        self.draw_goals_and_players()
-        self.generate_maze()
-        self.draw_instructions()
-        self.draw_scores()
-
-    def draw_scores(self):
-        font = pg.font.SysFont('dejavusansmono', 18, True)
-
-        p1_msg = f'PLAYER 1: {self.player1_score}'
-        p2_msg = f'PLAYER 2: {self.player2_score}'
-        p1_size = font.size(p1_msg)
-        p2_size = font.size(p2_msg)
-        p1 = font.render(p1_msg, True, PLAYER1_COLOR)
-        p2 = font.render(p2_msg, True, PLAYER2_COLOR)
-
-        p1_x = MAZE_TOP_LEFT_CORNER[0]
-        p1_y = MAZE_TOP_LEFT_CORNER[1] - p1_size[1]
-        p1_w = p1.get_rect().w
-        p1_h = p1.get_rect().h
-        p2_x = MAZE_TOP_LEFT_CORNER[0] + MAZE_WIDTH_PX - p2_size[0]
-        p2_y = MAZE_TOP_LEFT_CORNER[1] - p1_size[1]
-        p2_w = p2.get_rect().w
-        p2_h = p2.get_rect().h
-
-        self.screen.blit(p1, (p1_x, p1_y))
-        self.screen.blit(p2, (p2_x, p2_y))
-
-        pg.display.update([(p1_x, p1_y, p1_w, p1_h), (p2_x, p2_y, p2_w, p2_h)])
 
     def draw_win(self):
         msg = 'Player 1 Wins!' if self.win1_flag else 'Player 2 Wins!'
@@ -316,9 +283,9 @@ class MazeGenerator:
 
         pg.time.wait(3000)
 
-    def get_player_cell_indexes(self, player): #function finds and returns player's location
+    def get_player_cell_indexes(self, player):
 
-        # Top left corner of first cell; basis of finding cell positions
+        # Top left corner of first cell
         corner_offset_x = MAZE_TOP_LEFT_CORNER[0] + BLOCK_SIZE
         corner_offset_y = MAZE_TOP_LEFT_CORNER[1] + BLOCK_SIZE
 
@@ -336,13 +303,12 @@ class MazeGenerator:
     def can_move(self, direction, player):
         cell_index1, cell_index2 = self.get_player_cell_indexes(player)
 
-        functions = { #functions defined later
+        functions = {
             Direction.North: self.can_move_up,
             Direction.East: self.can_move_right,
             Direction.South: self.can_move_down,
             Direction.West: self.can_move_left
         }
-
 
         # Check for maze exit/win
         # Check if player is at opposing player's start x,y
@@ -351,70 +317,59 @@ class MazeGenerator:
         elif self.player2.rect.x == self.player1.start_x and self.player2.rect.y == self.player1.start_y:
             self.win2_flag = True
 
-
         return functions[direction](cell_index1, cell_index2)
 
-
-    def can_move_up(self, index1, index2): #checks if player can move North
+    def can_move_up(self, index1, index2):
         if index1 == index2:
             return self.maze[index1] & CellProp.Path_N.value
         else:
             return index2 == index1 + MAZE_WIDTH
 
-
-    def can_move_right(self, index1, index2): #checks if player can move East
+    def can_move_right(self, index1, index2):
         if index1 == index2:
             return self.maze[index1] & CellProp.Path_E.value
         else:
             return index2 == index1 + 1
 
-
-    def can_move_down(self, index1, index2): #checks if player can move South
+    def can_move_down(self, index1, index2):
         if index1 == index2:
             return self.maze[index1] & CellProp.Path_S.value
         else:
             return index2 == index1 + MAZE_WIDTH
 
-
-    def can_move_left(self, index1, index2): #checks if player can move West
+    def can_move_left(self, index1, index2):
         if index1 == index2:
             return self.maze[index1] & CellProp.Path_W.value
         else:
             return index2 == index1 + 1
 
-
-    def move(self, player, move): #function to move characters
+    def move(self, player, move):
         x, y = move
         player.rect.x += x
         player.rect.y += y
         self.draw_players()
 
-
-    def try_move(self, player, direction): #checks to see if wall is there or if path is open
+    def try_move(self, player, direction):
         if self.can_move(direction, player):
             self.move(player, direction.value)
         else:
             # Check if open corridor is nearby
             index1, index2 = self.get_player_cell_indexes(player)
 
-
             move1 = self.maze[index1] & self.direction_to_flag[direction].value
             move2 = self.maze[index2] & self.direction_to_flag[direction].value
-
 
             if move1 or move2:
                 # Move assist - move player closer to closest pathway in direction player is trying to move
                 # We know that index1 and index2 must be different cells
-                # gets direction of closest pathway
+                # get direction of closest pathway
                 # measure center of player to center of each cell
                 player_center = player.rect.x + (player.rect.w // 2), player.rect.y + (player.rect.h // 2)
-
 
                 corner_offset_x = MAZE_TOP_LEFT_CORNER[0] + BLOCK_SIZE
                 corner_offset_y = MAZE_TOP_LEFT_CORNER[1] + BLOCK_SIZE
                 cell1_x, cell1_y = index1 % MAZE_WIDTH, index1 // MAZE_WIDTH
                 cell2_x, cell2_y = index2 % MAZE_WIDTH, index2 // MAZE_WIDTH
-
 
                 square = BLOCK_SIZE * 4
                 cell1_x_px = corner_offset_x + cell1_x * square
@@ -422,13 +377,11 @@ class MazeGenerator:
                 cell2_x_px = corner_offset_x + cell2_x * square
                 cell2_y_px = corner_offset_y + cell2_y * square
 
-
                 cell1_center = cell1_x_px + (BLOCK_SIZE * PATH_WIDTH) // 2, cell1_y_px + (BLOCK_SIZE * PATH_WIDTH) // 2
                 cell2_center = cell2_x_px + (BLOCK_SIZE * PATH_WIDTH) // 2, cell2_y_px + (BLOCK_SIZE * PATH_WIDTH) // 2
 
-
                 if cell1_center[0] == player_center[0]:
-                    # player is facing North/South corridor
+                    # player is N/S corridor
                     if move1 and move2:
                         l1, l2 = abs(player_center[1] - cell1_center[1]), abs(player_center[1] - cell2_center[1])
                         if l1 < l2:
@@ -445,7 +398,7 @@ class MazeGenerator:
                             # move down
                             self.move(player, Direction.South.value)
                 else:
-                    # player is facing East/West corridor
+                    # player is E/W corridor
                     if move1 and move2:
                         l1, l2 = abs(player_center[0] - cell1_center[0]), abs(player_center[0] - cell2_center[0])
                         if l1 < l2:
@@ -462,6 +415,14 @@ class MazeGenerator:
                             # move right
                             self.move(player, Direction.East.value)
 
+    def initialize(self):
+        self.player1.reset()
+        self.player2.reset()
+        self.generate_maze()
+        self.draw_instructions()
+        self.draw_scores()
+        self.draw_players()
+
     def run_game(self):
         clock = pg.time.Clock()
         self.initialize()
@@ -472,23 +433,36 @@ class MazeGenerator:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     run = False
-
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         pg.quit()
                         sys.exit()
-       
+
+            if not self.win1_flag and not self.win2_flag:
+                keys = pg.key.get_pressed()
+                if keys[pg.K_LEFT]:
+                    self.try_move(self.player2, Direction.West)
+                if keys[pg.K_RIGHT]:
+                    self.try_move(self.player2, Direction.East)
+                if keys[pg.K_UP]:
+                    self.try_move(self.player2, Direction.North)
+                if keys[pg.K_DOWN]:
+                    self.try_move(self.player2, Direction.South)
+                if keys[pg.K_a]:
+                    self.try_move(self.player1, Direction.West)
+                if keys[pg.K_d]:
+                    self.try_move(self.player1, Direction.East)
+                if keys[pg.K_w]:
+                    self.try_move(self.player1, Direction.North)
+                if keys[pg.K_s]:
+                    self.try_move(self.player1, Direction.South)
+                if keys[pg.K_r]:
+                    self.initialize()  
+
                 if self.win1_flag or self.win2_flag:
                     self.draw_win()
                     self.win1_flag = self.win2_flag = False
                     self.initialize()
-
-                if not self.win1_flag and not self.win2_flag:
-                    keys = pg.key.get_pressed()
-                    if keys[pg.K_r]:
-                        self.initialize()
-                    if keys[pg.K_ESCAPE]:
-                        run = False
 
                 if SHOW_FPS:
                     pg.display.set_caption(f'PyMaze ({str(int(clock.get_fps()))} FPS)')
@@ -499,7 +473,6 @@ class MazeGenerator:
         pg.quit()
 
 mg = MazeGenerator()
-
 
 
 """
@@ -569,7 +542,7 @@ def main_menu():
  
         pg.display.update()
         mainClock.tick(60)
-
+ 
 
 """
 This function is called when the "OPTIONS" button is clicked.
@@ -607,4 +580,3 @@ def options():
         mainClock.tick(60)
  
 main_menu()
-
