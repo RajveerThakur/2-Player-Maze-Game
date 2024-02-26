@@ -9,3 +9,5 @@ Task 46: Create Scenarios where the player finishes the game
 Solution: I screen that says either you win or you lose pops up and adds a point to your win counter if you won.
 Task 47: Create a scenario where the player end up at the end of the maze before the other player
 Solution: The screne will say you lose and ask you to either exit to the start screne or play another game.
+Task 50: Create scenarios where the maze is changed to a different maze
+Solution: In order to generate a random maze to solve, the players just need to press the r on their keyboard.
