@@ -3,6 +3,13 @@ from enum import Enum
 import random
 import pygame as pg
 import sys
+import time
+from os import environ
+environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
+
+#Music initializaton
+pg.mixer.init()
+pg.mixer.music.load('you-win-sequence-1-183948.mp3')
 
 # Global Settings
 SHOW_DRAW = False  # Show the maze being created
@@ -263,8 +270,10 @@ class MazeGenerator:
         msg = 'Player 1 Wins!' if self.win1_flag else 'Player 2 Wins!'
 
         if self.win1_flag:
+            pg.mixer.music.play()
             self.player1_score += 1
         else:
+            pg.mixer.music.play()
             self.player2_score += 1
 
         self.draw_scores()
