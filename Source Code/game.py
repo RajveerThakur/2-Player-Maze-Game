@@ -560,24 +560,55 @@ This function is called when the "OPTIONS" button is clicked.
 
 def options():
     running = True
+    click = False
     while running:
 
         screen.fill((38,38,38))
+        mx, my = pg.mouse.get_pos()
 
         draw_text('OPTIONS SCREEN', font, (255, 255, 255), screen, 20, 20)
         draw_text('Background Colors', font, (255, 255, 255), screen, 90, 250)
         draw_text('Maze Colors', font, (255, 255, 255), screen, 90, 550)
+        
 
-        pg.draw.rect(screen, (227, 19, 29), pg.Rect(325, 225, 75, 75))
-        pg.draw.rect(screen, (255, 217, 102), pg.Rect(450, 225, 75, 75))
-        pg.draw.rect(screen, (39, 78, 19), pg.Rect(575, 225, 75, 75))
-        pg.draw.rect(screen, (96, 193, 232), pg.Rect(700, 225, 75, 75))
-        pg.draw.rect(screen, (24, 37, 71), pg.Rect(825, 225, 75, 75))
-        pg.draw.rect(screen, (250, 81, 146), pg.Rect(950, 225, 75, 75))
-        pg.draw.rect(screen, (91, 107, 170), pg.Rect(1075, 225, 75, 75))
-        pg.draw.rect(screen, (0, 0, 0), pg.Rect(325, 525, 75, 75))
+        maze_colors = [
+            ((227, 19, 29), pg.Rect(325, 225, 75, 75)),
+            ((255, 217, 102), pg.Rect(450, 225, 75, 75)),
+            ((56, 118, 29), pg.Rect(575, 225, 75, 75)),
+            ((96, 193, 232), pg.Rect(700, 225, 75, 75)),
+            ((24, 37, 71), pg.Rect(825, 225, 75, 75)),
+            ((250, 81, 146), pg.Rect(950, 225, 75, 75)),
+            ((91, 107, 170), pg.Rect(1075, 225, 75, 75))
+        ]
+        
+        wall_colors = [
+            ((0, 0, 0), pg.Rect(325, 525, 75, 75)),
+            ((255, 255, 255), pg.Rect(450, 525, 75, 75)),
+            ((204, 204, 204), pg.Rect(575, 525, 75, 75)),
+            ((249, 203, 156), pg.Rect(700, 525, 75, 75)),
+            ((255, 217, 102), pg.Rect(825, 525, 75, 75)),
+            ((96, 193, 232), pg.Rect(950, 525, 75, 75)),
+            ((174, 73, 73), pg.Rect(1075, 525, 75, 75))
+        ]
 
+
+        for color, rect in maze_colors:
+            pg.draw.rect(screen, color, rect)
+            if rect.collidepoint((mx, my)) and click:
+                global MAZE_COLOR
+                MAZE_COLOR = color
+
+        for color, rect in wall_colors:
+            pg.draw.rect(screen, color, rect)
+            if rect.collidepoint((mx, my)) and click:
+                global WALL_COLOR
+                WALL_COLOR = color
+
+        click = False
         for event in pg.event.get():
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
             if event.type == QUIT:
                 pg.quit()
                 sys.exit()
