@@ -98,7 +98,7 @@ class MazeGenerator:
         self.screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
         # Set the title on the window
-        pg.display.set_caption('2 Player Maze Game')
+        pg.display.set_caption('Maze Dash: Dueling Duos')
 
         # Use a single list to store 2D array
         self.maze = []
@@ -493,7 +493,7 @@ START SCREEN CODE BEGINS HERE
 mainClock = pg.time.Clock()
 from pygame.locals import *
 pg.init()
-pg.display.set_caption('2 Player Maze Game')
+pg.display.set_caption('Maze Dash: Dueling Duos')
 screen = pg.display.set_mode((1200, 960),0,32)
  
 #setting font settings
